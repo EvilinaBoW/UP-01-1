@@ -1,0 +1,35 @@
+<Page x:Class="WpfApp12.View.PageTask.Task1Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Task1Page">
+
+    <Border Background="#636E72" Margin="25">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,25">
+                <TextBlock Text="A:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"
+                           Margin="0,0,15,0" Foreground="White"/>
+                <TextBox x:Name="txtNokA" Width="120" Text="12" FontSize="16"/>
+                <TextBlock Text="x" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" Margin="25,0"/>
+                <TextBlock Text="B:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"
+                           Margin="0,0,15,0" Foreground="White"/>
+                <TextBox x:Name="txtNokB" Width="120" Text="18" FontSize="16"/>
+                <Button x:Name="btnCalculateNok" Content="ÍÎÊ"
+                        Style="{StaticResource InteractiveButton}"
+                        Click="BtnCalculateNok_Click"/>
+            </StackPanel>
+
+            <TextBlock x:Name="txtNokResult" Grid.Row="1"
+                       Style="{StaticResource AnimatedResult}"/>
+
+            <TextBlock Grid.Row="2" Text="ÍÎÊ(a,b) = |a ? b| / ÍÎÄ(a,b)"
+                       HorizontalAlignment="Center"
+                       FontSize="14" Foreground="#F8C8DC" Margin="0,0,0,20"/>
+        </Grid>
+    </Border>
+</Page>

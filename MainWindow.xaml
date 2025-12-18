@@ -1,261 +1,146 @@
-<Window x:Class="WpfApp12.MainWindow"
+﻿<Window x:Class="WpfApp12.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp12"
         mc:Ignorable="d"
-        Title="Алгоритмы - Вариант 10" Height="750" Width="1100">
-
-    <Window.Resources>
-        <!-- Нежно-розовый + угольно-серый палитра -->
-        <SolidColorBrush x:Key="PinkPrimary" Color="#F8C8DC"/>
-        <SolidColorBrush x:Key="PinkAccent" Color="#FFB6C1"/>
-        <SolidColorBrush x:Key="PinkHover" Color="#F4A8C8"/>
-        <SolidColorBrush x:Key="CharcoalPrimary" Color="#2D3436"/>
-        <SolidColorBrush x:Key="CharcoalDark" Color="#1A1A1A"/>
-        <SolidColorBrush x:Key="CharcoalLight" Color="#636E72"/>
-        <SolidColorBrush x:Key="WhiteText" Color="White"/>
-        <SolidColorBrush x:Key="PinkText" Color="#E84393"/>
-
-        <!-- ИНТЕРАКТИВНЫЕ кнопки -->
-        <Style x:Key="InteractiveButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource CharcoalPrimary}"/>
-            <Setter Property="Foreground" Value="{StaticResource WhiteText}"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="BorderBrush" Value="{StaticResource PinkAccent}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="20,12"/>
-            <Setter Property="Margin" Value="8,0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#E84393" ShadowDepth="3" BlurRadius="8"/>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource PinkHover}"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="#E84393" ShadowDepth="8" BlurRadius="15"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="{StaticResource PinkAccent}"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="#E84393" ShadowDepth="1" BlurRadius="5"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Результаты -->
-        <Style x:Key="AnimatedResult" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="15"/>
-            <Setter Property="Foreground" Value="{StaticResource PinkText}"/>
-        </Style>
-    </Window.Resources>
-
+        Title="Алгоритмы и структуры данных - Вариант 10" Height="700" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ГРАДИЕНТНЫЙ ХЕДЕР -->
-        <Border Grid.Row="0">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#F8C8DC" Offset="0"/>
-                    <GradientStop Color="#FFB6C1" Offset="1"/>
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="ВАРИАНТ 10 - Алгоритмы и структуры данных" 
+                   FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" 
+                   Margin="10">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FFC77BFF" Offset="1"/>
                 </LinearGradientBrush>
-            </Border.Background>
-            <TextBlock Text="АЛГОРИТМЫ DATA STRUCTURES" 
-                       Foreground="#2D3436" FontSize="24" FontWeight="Bold" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+            </TextBlock.Foreground>
+        </TextBlock>
 
-        <!-- КОНТЕНТ -->
-        <Border Grid.Row="1" Background="#2D3436" Margin="25">
-            <TabControl Margin="25" Background="Transparent">
+        <TabControl Grid.Row="2" Margin="10">
+            <!-- Задача 10.1 НОК через НОД -->
+            <TabItem Header="10.1 НОК через НОД">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Число A:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtNokA" Width="80" Margin="5" Text="12"/>
+                        <TextBlock Text="Число B:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtNokB" Width="80" Margin="5" Text="18"/>
+                        <Button x:Name="btnCalculateNok" Content="Вычислить НОК" Width="100" Margin="10,0" Click="BtnCalculateNok_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="txtNokResult" Grid.Row="1" FontSize="16" FontWeight="Bold" 
+                               Margin="10" Foreground="DarkGreen"/>
+                    <TextBlock Grid.Row="2" Text="НОК(a,b) = a * b / НОД(a,b). Поддержка BigInteger для больших чисел." 
+                               Margin="10" TextWrapping="Wrap" Foreground="Gray"/>
+                </Grid>
+            </TabItem>
 
-                <!-- 10.1 НОК -->
-                <TabItem Header="НОК через НОД">
-                    <Border Background="#636E72" Margin="25">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+            <!-- Задача 10.2 Решето Эратосфена -->
+            <TabItem Header="10.2 Решето Эратосфена">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="От:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtEratStart" Width="80" Margin="5" Text="2"/>
+                        <TextBlock Text="До:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtEratEnd" Width="80" Margin="5" Text="1000"/>
+                        <Button x:Name="btnFindPrimes" Content="Найти простые" Width="100" Margin="10,0" Click="BtnFindPrimes_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="txtEratResult" Grid.Row="1" FontSize="14" FontWeight="Bold" 
+                               Margin="10" Foreground="DarkBlue"/>
+                    <ListBox x:Name="lstPrimes" Grid.Row="2" Margin="10"/>
+                </Grid>
+            </TabItem>
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,25">
-                                <TextBlock Text="A:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="0,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtNokA" Width="120" Text="12" FontSize="16"/>
-                                <TextBlock Text="x" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" Margin="25,0"/>
-                                <TextBlock Text="B:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="0,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtNokB" Width="120" Text="18" FontSize="16"/>
-                                <Button x:Name="btnCalculateNok" Content="НОК" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnCalculateNok_Click"/>
-                            </StackPanel>
+            <!-- Задача 10.3 Стек и проверка скобок -->
+            <TabItem Header="10.3 Стек - Проверка скобок">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Выражение:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtBrackets" Width="300" Margin="5" Text="(({}[]))"/>
+                        <Button x:Name="btnCheckBrackets" Content="Проверить скобки" Width="120" Margin="10,0" Click="BtnCheckBrackets_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="txtBracketsResult" Grid.Row="1" FontSize="16" FontWeight="Bold" 
+                               Margin="10" Foreground="DarkRed"/>
+                    <StackPanel Grid.Row="2" Margin="10">
+                        <TextBlock Text="Стек операций:" FontWeight="Bold"/>
+                        <ListBox x:Name="lstStack" Height="100"/>
+                        <Button x:Name="btnStackPush" Content="Push" Width="60" Margin="5" Click="BtnStackPush_Click"/>
+                        <Button x:Name="btnStackPop" Content="Pop" Width="60" Margin="5" Click="BtnStackPop_Click"/>
+                        <Button x:Name="btnStackPeek" Content="Peek" Width="60" Margin="5" Click="BtnStackPeek_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
 
-                            <TextBlock x:Name="txtNokResult" Grid.Row="1" Style="{StaticResource AnimatedResult}"/>
+            <!-- Задача 10.4 Подсчет инверсий -->
+            <TabItem Header="10.4 Подсчет инверсий">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Массив:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtInversions" Width="400" Margin="5" Text="5,2,8,1,9,3,7,4,6"/>
+                        <Button x:Name="btnCountInversions" Content="Подсчитать инверсии" Width="140" Margin="10,0" Click="BtnCountInversions_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="txtInversionsResult" Grid.Row="1" FontSize="16" FontWeight="Bold" 
+                               Margin="10" Foreground="DarkMagenta"/>
+                    <ListBox x:Name="lstInversions" Grid.Row="2" Margin="10"/>
+                </Grid>
+            </TabItem>
 
-                            <TextBlock Grid.Row="2" Text="НОК(a,b) = |a × b| / НОД(a,b)" HorizontalAlignment="Center" 
-                                     FontSize="14" Foreground="#F8C8DC" Margin="0,0,0,20"/>
-                        </Grid>
-                    </Border>
-                </TabItem>
+            <!-- Задача 10.5 JSON обработка (упрощенная без Newtonsoft) -->
+            <TabItem Header="10.5 JSON обработка">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <Button x:Name="btnLoadJson" Content="Загрузить JSON" Width="120" Margin="5" Click="BtnLoadJson_Click"/>
+                        <TextBox x:Name="txtSearchField" Width="100" Margin="5" Text="name"/>
+                        <TextBox x:Name="txtSearchValue" Width="100" Margin="5" Text=""/>
+                        <Button x:Name="btnSearchJson" Content="Поиск" Width="80" Margin="10,0" Click="BtnSearchJson_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="txtJsonStatus" Grid.Row="1" Margin="10" Foreground="Gray"/>
+                    <TextBlock Grid.Row="2" Text="JSON данные:" FontWeight="Bold" Margin="10"/>
+                    <TextBox x:Name="txtJsonContent" Grid.Row="3" Margin="10" TextWrapping="Wrap" 
+                             VerticalScrollBarVisibility="Auto" IsReadOnly="True" FontFamily="Consolas"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
-                <!-- 10.2 Решето -->
-                <TabItem Header="РЕШЕТО">
-                    <Border Background="#636E72" Margin="25">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,25">
-                                <TextBlock Text="От:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="0,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtEratStart" Width="110" Text="2" FontSize="16"/>
-                                <TextBlock Text="До:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="30,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtEratEnd" Width="110" Text="1000" FontSize="16"/>
-                                <Button x:Name="btnFindPrimes" Content="Найти" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnFindPrimes_Click"/>
-                            </StackPanel>
-
-                            <TextBlock x:Name="txtEratResult" Grid.Row="1" Style="{StaticResource AnimatedResult}"/>
-
-                            <ListBox x:Name="lstPrimes" Grid.Row="2" Margin="0,10" BorderThickness="0"/>
-                        </Grid>
-                    </Border>
-                </TabItem>
-
-                <!-- 10.3 Стек -->
-                <TabItem Header="СТЕК">
-                    <Border Background="#636E72" Margin="25">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,25">
-                                <TextBlock Text="Выражение:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="0,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtBrackets" Width="380" Text="(({}[]))" FontSize="16"/>
-                                <Button x:Name="btnCheckBrackets" Content="Check" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnCheckBrackets_Click"/>
-                            </StackPanel>
-
-                            <TextBlock x:Name="txtBracketsResult" Grid.Row="1" Style="{StaticResource AnimatedResult}"/>
-
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <ListBox x:Name="lstStack" Grid.Column="0" Margin="0,0,20,0" BorderThickness="0"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <Button x:Name="btnStackPush" Content="Push" Style="{StaticResource InteractiveButton}" 
-                                          Click="BtnStackPush_Click"/>
-                                    <Button x:Name="btnStackPop" Content="Pop" Style="{StaticResource InteractiveButton}" 
-                                          Click="BtnStackPop_Click"/>
-                                    <Button x:Name="btnStackPeek" Content="Peek" Style="{StaticResource InteractiveButton}" 
-                                          Click="BtnStackPeek_Click"/>
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </TabItem>
-
-                <!-- 10.4 Инверсии -->
-                <TabItem Header="ИНВЕРСИИ">
-                    <Border Background="#636E72" Margin="25">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,25">
-                                <TextBlock Text="Массив:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" 
-                                         Margin="0,0,15,0" Foreground="White"/>
-                                <TextBox x:Name="txtInversions" Width="480" Text="5,2,8,1,9,3,7,4,6" FontSize="16"/>
-                                <Button x:Name="btnCountInversions" Content="Count" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnCountInversions_Click"/>
-                            </StackPanel>
-
-                            <TextBlock x:Name="txtInversionsResult" Grid.Row="1" Style="{StaticResource AnimatedResult}"/>
-
-                            <ListBox x:Name="lstInversions" Grid.Row="2" Margin="0,10" BorderThickness="0"/>
-                        </Grid>
-                    </Border>
-                </TabItem>
-
-                <!-- 10.5 JSON -->
-                <TabItem Header="JSON">
-                    <Border Background="#636E72" Margin="25">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,20">
-                                <Button x:Name="btnLoadJson" Content="Load" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnLoadJson_Click"/>
-                                <TextBox x:Name="txtSearchField" Width="110" Margin="12,0" Text="name" FontSize="14"/>
-                                <TextBox x:Name="txtSearchValue" Width="110" Margin="12,0" FontSize="14"/>
-                                <Button x:Name="btnSearchJson" Content="Search" Style="{StaticResource InteractiveButton}" 
-                                      Click="BtnSearchJson_Click"/>
-                            </StackPanel>
-
-                            <TextBlock x:Name="txtJsonStatus" Grid.Row="1" HorizontalAlignment="Center" FontSize="16" 
-                                     FontWeight="Bold" Margin="0,0,0,10" Foreground="#E84393"/>
-
-                            <TextBlock Grid.Row="2" Text="JSON данные:" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" 
-                                     Foreground="White"/>
-
-                            <TextBox x:Name="txtJsonContent" Grid.Row="3" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
-                                   IsReadOnly="True" FontFamily="Consolas" FontSize="13" Margin="0,10" Height="280"/>
-                        </Grid>
-                    </Border>
-                </TabItem>
-            </TabControl>
-        </Border>
-
-        <!-- СТАТУСБАР -->
-        <Border Grid.Row="2">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#1A1A1A" Offset="0"/>
-                    <GradientStop Color="#2D3436" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <StatusBar Background="Transparent">
-                <StatusBarItem x:Name="statusBar" Content="Готов к вычислениям" Foreground="#F8C8DC" 
-                             FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center"/>
-            </StatusBar>
-        </Border>
+        <!-- Исправленный StatusBar -->
+        <StatusBar Grid.Row="3">
+            <StatusBarItem x:Name="statusBar" Content="Готов к работе"/>
+        </StatusBar>
     </Grid>
 </Window>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -325,7 +325,8 @@ namespace WpfApp12
             {
                 string field = txtSearchField.Text;
                 string value = txtSearchValue.Text;
-                
+
+                // Исправленный паттерн для поиска JSON полей
                 string pattern = "\"" + Regex.Escape(field) + "\"\\s*:\\s*\"([^\"\\\\]|\\\\.)*\"";
                 var matches = Regex.Matches(jsonContent, pattern, RegexOptions.IgnoreCase);
 
